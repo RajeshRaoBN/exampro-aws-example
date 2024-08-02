@@ -1,0 +1,11 @@
+#! /usr/bin/env bash
+
+# Check if at least one of VAR1, VAR2, or VAR3 is set and non-empty
+if [ -n "$VAR1" ] || [ -n "$VAR2" ] || [ -n "$VAR3" ]; then
+    echo "At least one variable is set and not empty."
+else
+    echo "None of the variables are set or all are empty."
+fi
+
+
+aws s3api create-bucket --bucket
