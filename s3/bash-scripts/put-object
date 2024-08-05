@@ -1,1 +1,22 @@
 #! /usr/bin/env bash
+
+# Where we will store these files
+OUTPUT_DIR="/tmp/s3-bash-scripts"
+
+# Let us create bash scripts
+mkdir -p $OUTPUT_DIR
+
+# Generate a random number between 5 and 10
+# To create the number of files
+NUM_FILES=$(shuf -i 5-10 -n 1)
+
+# Create the random number of files
+for i in $(seq 1 "$NUM_FILES"); do
+    # Generate a unique filename
+    FILENAME="$OUTPUT_DIR/file_$i.txt"
+    # Create an empty file with the generated filename
+    touch "$FILENAME"
+    echo "Created file: $FILENAME"
+done
+
+echo "Total files created: $NUM_FILES"
