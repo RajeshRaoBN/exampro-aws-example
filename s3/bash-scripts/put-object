@@ -6,8 +6,14 @@ set -e
 # Where we will store these files
 OUTPUT_DIR="/tmp/s3-bash-scripts"
 
-# Remove folder if it already exists
-rm -r $OUTPUT_DIR
+# Check if the directory exists
+if [ -d "$OUTPUT_DIR" ]; then
+    echo "Directory $OUTPUT_DIR exists. Removing it..."
+    rm -r "$OUTPUT_DIR"
+    echo "Directory $OUTPUT_DIR removed."
+else
+    echo "Directory $OUTPUT_DIR does not exist."
+fi
 
 # Let us create bash scripts
 mkdir -p $OUTPUT_DIR
