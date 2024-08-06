@@ -2,4 +2,4 @@
 
 echo "== List Buckets =="
 
-aws s3 ls
+aws s3 ls | awk '{print $3}'
