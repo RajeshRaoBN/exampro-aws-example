@@ -1,0 +1,9 @@
+#! /usr/bin/env bash
+
+echo "== List newest Bucket =="
+
+aws s3api list-buckets --query 'Buckets[].[Name,CreationDate]' --output json \
+| jq -r '.[] | @csv' \
+| sort -t, -k2,2r \
+| head -n 1 \
+| cut -d, -f1
