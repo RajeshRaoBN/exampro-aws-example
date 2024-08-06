@@ -10,7 +10,7 @@ fi
 
 # Check for filename prefix
 if [ -z "$2" ]; then
-    echo "There needs to be a bucket name eg. ./bucket my-bucket-name."
+    echo "There needs to be a file name eg. ./bucket my-file-name."
     exit
 fi
 
@@ -43,7 +43,7 @@ NUM_FILES=$(shuf -i 5-10 -n 1)
 # Create the random number of files
 for i in $(seq 1 "$NUM_FILES"); do
     # Generate a unique filename
-    FILENAME="$OUTPUT_DIR/$FILENAME_PREFIX_$i.txt"
+    FILENAME="$OUTPUT_DIR/${FILENAME_PREFIX}_$i.txt"
     # Create an empty file with the generated filename
     touch "$FILENAME"
     echo "Created file: $FILENAME"
