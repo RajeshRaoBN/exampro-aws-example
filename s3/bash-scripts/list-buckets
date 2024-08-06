@@ -1,0 +1,5 @@
+#! /usr/bin/env bash
+
+echo "== List Buckets =="
+
+aws s3 ls
