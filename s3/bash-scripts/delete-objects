@@ -35,7 +35,7 @@ while true; do
     fi
 
     # Prepare list of objects to delete
-    objects_to_delete=$(echo "$response" | jq -c '{Objects: [.Contents[] | {Key: .Key}]}')
+    objects_to_delete=$(echo "$response" | jq -c '{Objects: [.Contents[] | {Key: .Key}],"Quiet": false}')
 
     # Delete the objects
     delete_objects "$BUCKET_NAME" "$objects_to_delete"
