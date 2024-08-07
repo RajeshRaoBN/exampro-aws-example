@@ -1,6 +1,7 @@
 #! /usr/bin/env bash
 
-echo "== Delete Objects =="
+# Define the bucket name
+echo "== Delete all Objects =="
 
 # Check for bucket name
 if [ -z "$1" ]; then
@@ -10,4 +11,43 @@ fi
 
 BUCKET_NAME=$1
 
-aws s3api delete-objects --bucket $BUCKET_NAME
+# Function to delete objects
+delete_objects() {
+    local bucket_name="$1"
+    local objects_json="$2"
+
+    # Delete the objects
+    aws s3api delete-objects --bucket "$bucket_name" --delete "Objects=$objects_json"
+}
+
+# Initial listing of objects
+response=$(aws s3api list-objects-v2 --bucket "$BUCKET_NAME" --output json)
+
+# Process objects
+while true; do
+    # Extract object keys
+    object_keys=$(echo "$response" | jq -r '.Contents[].Key')
+
+    # If no objects are found, exit the loop
+    if [ -z "$object_keys" ]; then
+        echo "No objects found in bucket $BUCKET_NAME."
+        break
+    fi
+
+    # Prepare list of objects to delete
+    objects_to_delete=$(echo "$response" | jq -c '{Objects: [.Contents[] | {Key: .Key}]}')
+
+    # Delete the objects
+    delete_objects "$BUCKET_NAME" "$objects_to_delete"
+
+    echo "Deleted objects: $(echo "$objects_to_delete" | jq -r '.Objects[].Key')"
+
+    # Check if the result is truncated
+    if [ "$(echo "$response" | jq -r '.IsTruncated')" == "true" ]; then
+        # Fetch the next set of objects using the continuation token
+        token=$(echo "$response" | jq -r '.NextContinuationToken')
+        response=$(aws s3api list-objects-v2 --bucket "$BUCKET_NAME" --continuation-token "$token" --output json)
+    else
+        break
+    fi
+done
