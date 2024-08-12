@@ -4,12 +4,12 @@
 echo "== Delete all Objects =="
 
 # Check for bucket name
-if [ -z "$1" ]; then
+if [ -z "$3" ]; then
     echo "There needs to be a bucket name eg. ./bucket my-bucket-name."
     exit
 fi
 
-BUCKET_NAME=$1
+BUCKET_NAME=$3
 
 # Function to delete objects
 delete_objects() {
