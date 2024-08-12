@@ -4,7 +4,8 @@ tasks:
     before: |
       sudo apt-get install tree
   # https://learn.microsoft.com/en-us/powershell/scripting/install/install-ubuntu?view=powershell-7.4
-    name: powershell
+  # https://docs.aws.amazon.com/powershell/latest/userguide/pstools-getting-set-up-linux-mac.html
+  - name: powershell
       before: |
         sudo apt-get update
         sudo apt-get install -y wget apt-transport-https software-properties-common
@@ -14,6 +15,9 @@ tasks:
         rm packages-microsoft-prod.deb
         sudo apt-get update
         sudo apt-get install -y powershell
+  # pwsh
+  # Install-Module -Name AWS.Tools.Installer
+  # Install-AWSToolsModule AWS.Tools.EC2,AWS.Tools.S3 -CleanUp
   - name: aws-cli
     env:
       AWS_CLI_AUTO_PROMPT: on-partial 
