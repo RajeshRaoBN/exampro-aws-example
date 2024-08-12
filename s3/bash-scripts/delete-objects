@@ -17,7 +17,7 @@ delete_objects() {
     local objects_json="$2"
 
     # Delete the objects
-    aws s3api delete-objects --bucket "$bucket_name" --delete "Objects=$objects_json"
+    aws s3api delete-objects --bucket "$bucket_name" --delete "$objects_json"
 }
 
 # Initial listing of objects
