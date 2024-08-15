@@ -23,7 +23,7 @@ New-S3Bucket -BucketName $bucketName -Region $region
 
 # Create a new file
 
-$fileName = "myfilename.tex"
+$fileName = "myfilename.txt"
 $fileContent = "Hello World!"
 
 Set-Content -Path $fileName -Value $fileContent
